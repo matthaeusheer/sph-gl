@@ -19,7 +19,7 @@ enum Camera_Movement {
 const float YAW        = -90.0f;
 const float PITCH      =  0.0f;
 const float SPEED      =  30.0f;
-const float SENSITIVTY =  0.1f;
+const float SENSITIVTY =  0.03f;
 const float ZOOM       =  45.0f;
 
 
@@ -51,22 +51,29 @@ public:
 	float InitialZoom;
 
     // Constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), 
+		   glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), 
+		   float yaw = YAW, 
+		   float pitch = PITCH) 
+		: Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
+		  MovementSpeed(SPEED), 
+		  MouseSensitivity(SENSITIVTY), 
+		  Zoom(ZOOM)
     {
         Position = position;
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
 
-		/*
+		
 		InitialFront = Front;
 		InitialRight = Right;
-		Zoom = InitialZoom;
+		InitialZoom = Zoom;
 		InitialPosition = position;
 		InitialWorldUp = up;
 		InitialYaw = yaw;
 		InitialPitch = pitch;
-		*/
+		
 
 		updateCameraVectors();
     }
@@ -141,7 +148,7 @@ public:
 		Right = InitialRight;
 		WorldUp = InitialWorldUp;
 		Position = InitialPosition;
-		WorldUp = InitialUp;
+		WorldUp = InitialWorldUp;
 		Yaw = InitialYaw;
 		Pitch = InitialPitch;
 		updateCameraVectors();
