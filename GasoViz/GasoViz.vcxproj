@@ -143,7 +143,6 @@
   <ItemGroup>
     <ClCompile Include="src\csvReader.cpp" />
     <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\glfwHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,9 +150,7 @@
     <ClInclude Include="Headers\camera.h" />
     <ClInclude Include="Headers\std_image.h" />
     <ClInclude Include="Headers\Shader.h" />
-    <ClInclude Include="Headers\csv.h" />
-    <ClInclude Include="src\csvReader.h" />
-    <ClInclude Include="Headers\glfwHandler.h" />
+    <ClInclude Include="Headers\csvReader.h" />
     <ClInclude Include="src\particle.h" />
   </ItemGroup>
   <ItemGroup>

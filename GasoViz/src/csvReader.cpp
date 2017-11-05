@@ -5,7 +5,6 @@
 #include <vector>
 #include <cstdio>
 
-
 #include "particle.h"
 #include "csvReader.h"
 

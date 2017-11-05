@@ -46,7 +46,7 @@ float lastFrame = 0.0f;
 // -----------------------
 // loading data
 
-std::vector<std::string> outSteps = arange(50, 200, 50);
+std::vector<std::string> outSteps = arange(50, 100, 50);
 std::vector<std::vector<float>> allData = loadAllFiles(outSteps);
 unsigned int datIdx = 0;
 std::string currentOutputStep = outSteps[datIdx];
