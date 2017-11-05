@@ -83,7 +83,6 @@ std::vector<float> loadCSVPos(const char* fileName) {
 	}
 	else
 	{
-		printf("File opened.\n");
 		while (std::fscanf(f, "%f,%f,%f,%f,%f,%f,%f,%f", &x, &y, &z, &vx, &vy, &vz, &m, &rho) == 8) {
 
 			data.push_back(x); 

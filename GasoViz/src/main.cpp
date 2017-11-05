@@ -19,6 +19,10 @@
 
 #include "csvReader.h"
 
+// files to load
+int startIdx = 50;
+int endIdx   = 100;
+int stepSize = 50;
 
 // function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -26,7 +30,6 @@ void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int createTexture();
-
 
 // screen settings
 const unsigned int SCR_WIDTH = 1700;
@@ -46,7 +49,7 @@ float lastFrame = 0.0f;
 // -----------------------
 // loading data
 
-std::vector<std::string> outSteps = arange(50, 100, 50);
+std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
 std::vector<std::vector<float>> allData = loadAllFiles(outSteps);
 unsigned int datIdx = 0;
 std::string currentOutputStep = outSteps[datIdx];
