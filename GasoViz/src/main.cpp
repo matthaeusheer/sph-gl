@@ -119,12 +119,10 @@ int main()
 	unsigned int* VBOp = buff.VBO;
 
 	glEnable(GL_PROGRAM_POINT_SIZE);
-	int committest;
 	// render loop
 	// -----------
 	int numberOfRenders = 0;
 	float lastTimeValue = 0.0;
-	int VScommitTest;
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
