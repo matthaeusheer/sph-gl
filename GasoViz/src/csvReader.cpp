@@ -9,7 +9,6 @@
 #include "particle.h"
 #include "csvReader.h"
 
-
 std::vector<std::vector<float>> loadAllFiles(const std::vector<std::string>& outSteps) {
 
 	std::vector<std::vector<float>> allData(outSteps.size());
@@ -31,7 +30,7 @@ std::vector<std::vector<float>> loadAllFiles(const std::vector<std::string>& out
 		allData[i] = data;
 	
 	}
-
+	
 	return allData;
 }
 

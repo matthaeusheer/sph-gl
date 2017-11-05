@@ -114,7 +114,6 @@ int main()
 	// Creating a shader program
 	Shader ourShader("Shaders/shader.vs", "Shaders/shader.fs");
 
-	
 	buffers buff = initBuffer();
 	unsigned int* VAOp = buff.VAO;
 	unsigned int* VBOp = buff.VBO;
@@ -125,7 +124,7 @@ int main()
 	// -----------
 	int numberOfRenders = 0;
 	float lastTimeValue = 0.0;
-
+	int VScommitTest;
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -142,6 +141,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		ourShader.use();
+
+		int somevar = 1;
 
 		// transform into world coordiates
 		glm::mat4 model;
