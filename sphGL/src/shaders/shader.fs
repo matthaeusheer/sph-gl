@@ -11,10 +11,12 @@ vec4 colormap(float x);
 void main()
 {
 	vec2 circCoord = 2.0 * gl_PointCoord - 1.0;
-	if (dot(circCoord, circCoord) > 1.0) {
+	float radiusSqr = dot(circCoord, circCoord);
+	if (radiusSqr > 1.0) {
 		discard;
 	}
     FragColor = colormap(dens/8);
+	FragColor.w = 1 - sqrt(radiusSqr);
 } 
 
 float colormap_up(float x) {

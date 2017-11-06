@@ -20,7 +20,7 @@
 
 // files to load
 int startIdx = 50;
-int endIdx   = 200;
+int endIdx   = 100;
 int stepSize = 50;
 
 // function declarations
@@ -60,7 +60,11 @@ struct buffers {
 	unsigned int* VAO;
 	unsigned int* VBO;
 };
+
 buffers initBuffer();
+
+unsigned int* VAOp;
+unsigned int* VBOp;
 
 int main()
 {
@@ -111,13 +115,13 @@ int main()
 	std::cout << "GL_VERSION >>> " << glGetString(GL_VERSION) << std::endl;
 	
 	glEnable(GL_DEPTH_TEST);
-	
+	glEnable(GL_BLEND);
 	// Creating a shader program
 	Shader shaderProgram("src/shaders/shader.vs", "src/shaders/shader.fs");
 
 	buffers buff = initBuffer();
-	unsigned int* VAOp = buff.VAO;
-	unsigned int* VBOp = buff.VBO;
+	VAOp = buff.VAO;
+	VBOp = buff.VBO;
 
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	// render loop
@@ -138,7 +142,8 @@ int main()
 		// background color buffer reset
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		
+		glBindVertexArray(*VAOp);
 		shaderProgram.enable();
 
 		int somevar = 1;
@@ -161,7 +166,6 @@ int main()
 		shaderProgram.setFloat("pointSize", pointSize);
 
 		// activate our shader
-		glBindVertexArray(*VAOp);
 		glDrawArrays(GL_POINTS, 0, n_vertices);
 
 		if (numberOfRenders % 1000 == 0) {
@@ -173,7 +177,7 @@ int main()
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		// Draw tweak bars
-		// TwDraw(); //Doesnt work right now, cannot update buffer if tweakbar is being drawn
+		TwDraw(); //Doesnt work right now, cannot update buffer if tweakbar is being drawn
 		glfwSwapBuffers(window);
 	}
 	glDeleteVertexArrays(1, VAOp);
@@ -211,6 +215,7 @@ buffers initBuffer() {
 
 void updateBufferOnly() {
 	std::cout << "updating buffer" << std::endl;
+	glBindVertexArray(*VAOp);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, allData[datIdx].size() * sizeof(float), allData[datIdx].data());
 }
 

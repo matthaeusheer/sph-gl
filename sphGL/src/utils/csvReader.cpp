@@ -4,11 +4,14 @@
 #include <string>
 #include <vector>
 #include <cstdio>
+#include <time.h>
 
 #include "particle.h"
 #include "csvReader.h"
 
 std::vector<std::vector<float>> loadAllFiles(const std::vector<std::string>& outSteps) {
+
+		
 
 	std::vector<std::vector<float>> allData(outSteps.size());
 
@@ -21,13 +24,18 @@ std::vector<std::vector<float>> loadAllFiles(const std::vector<std::string>& out
 	std::cout << "Number of particles : " << nEntriesToReserve / 8 << std::endl;
 
 	for (int i=0; i < outSteps.size(); i++) {
+		time_t start = time(0);
+
 		std::string step = outSteps[i];
 		padTo(step, 5);
 		std::string fileName = "Data\\out_" + step + ".txt";
-		std::cout << "Loading... " << fileName << std::endl;
+		std::cout << "Loading... " << fileName;
 		std::vector<float> data = loadCSVFile(&fileName[0], nEntriesToReserve);
 		allData[i] = data;
-	
+
+		time_t current_time = time(0);
+		double time = difftime(current_time, start) * 1000.0;
+		std::cout << ", Time: " << current_time - start << " sec" << std::endl;
 	}
 	
 	return allData;
