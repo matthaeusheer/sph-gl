@@ -1,14 +1,13 @@
-#include <glad/glad.h>
+#include <GLAD/glad.h>
 
-#include <AntTweakBar.h>
-#define GLFW_DLL
+#include <AntBar/AntTweakBar.h>
 #include <GLFW/glfw3.h>
 
-#include "Shader.h"
+#include "src/graphics/Shader.h"
 #define STB_IMAGE_IMPLEMENTATION
-#include "std_image.h"
+#include "StdImage/std_image.h"
 
-#include "camera.h"
+#include "src/graphics/camera.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,11 +16,11 @@
 #include <math.h>
 #include <iostream>
 
-#include "csvReader.h"
+#include "src/utils/csvReader.h"
 
 // files to load
 int startIdx = 50;
-int endIdx   = 100;
+int endIdx   = 200;
 int stepSize = 50;
 
 // function declarations
@@ -74,7 +73,6 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
 	// glfw window creation
 	//--------------------
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "GasoViz", nullptr, nullptr);
@@ -115,7 +113,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	
 	// Creating a shader program
-	Shader ourShader("Shaders/shader.vs", "Shaders/shader.fs");
+	Shader shaderProgram("src/shaders/shader.vs", "src/shaders/shader.fs");
 
 	buffers buff = initBuffer();
 	unsigned int* VAOp = buff.VAO;
@@ -141,26 +139,26 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		ourShader.use();
+		shaderProgram.enable();
 
 		int somevar = 1;
 
 		// transform into world coordiates
 		glm::mat4 model;
-		ourShader.setMat4("model", model);
+		shaderProgram.setMat4("model", model);
 
 		// camera/view transformation
 		glm::mat4 view = camera.GetViewMatrix();
-		ourShader.setMat4("view", view);
+		shaderProgram.setMat4("view", view);
 
 		glm::mat4 trans;
-		ourShader.setMat4("transform", trans);
+		shaderProgram.setMat4("transform", trans);
 
 		// projection matrix
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-		ourShader.setMat4("projection", projection);
+		shaderProgram.setMat4("projection", projection);
 
-		ourShader.setFloat("pointSize", pointSize);
+		shaderProgram.setFloat("pointSize", pointSize);
 
 		// activate our shader
 		glBindVertexArray(*VAOp);
@@ -175,7 +173,7 @@ int main()
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		// Draw tweak bars
-		//TwDraw(); Doesnt work right now, cannot update buffer if tweakbar is being drawn
+		// TwDraw(); //Doesnt work right now, cannot update buffer if tweakbar is being drawn
 		glfwSwapBuffers(window);
 	}
 	glDeleteVertexArrays(1, VAOp);
@@ -275,7 +273,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		lastX = xpos;
 		lastY = ypos;
 
-		camera.ProcessMouseMovement(xoffset, yoffset);
+		camera.ProcessMouseMovement(xoffset, yoffset, true);
 	
 
 }
