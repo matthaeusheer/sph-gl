@@ -69,31 +69,31 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\mathee\openGL\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mathee\openGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Users\mathee\openGL\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mathee\openGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\mathee\openGL\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mathee\openGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\mathee\openGL\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mathee\openGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\mathee\openGL\headers;C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers;%(AdditionalIncludeDirectories);C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\include;$(SolutionDir)GasoViz\Dependencies\GLAD\include;$(SolutionDir)GasoViz\Dependencies\AntBar\include;$(SolutionDir)GasoViz\Dependencies\StdImage\include;$(SolutionDir)GasoViz\Dependencies\glm\include;$(SolutionDir)GasoViz\Dependencies\KHR\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;AntTweakBar64.lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\mathee\openGL\libs;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\libs;$(SolutionDir)GasoViz\Dependencies\GLEW\libs;$(SolutionDir)GasoViz\Dependencies\AntBar\libs</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,10 +101,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\mathee\openGL\headers;%(AdditionalIncludeDirectories);C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\include;$(SolutionDir)GasoViz\Dependencies\GLAD\include;$(SolutionDir)GasoViz\Dependencies\AntBar\include;$(SolutionDir)GasoViz\Dependencies\StdImage\include;$(SolutionDir)GasoViz\Dependencies\glm\include;$(SolutionDir)GasoViz\Dependencies\KHR\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\mathee\openGL\libs;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\libs;$(SolutionDir)GasoViz\Dependencies\GLEW\libs;$(SolutionDir)GasoViz\Dependencies\AntBar\libs</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;AntTweakBar64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -115,12 +115,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\mathee\openGL\headers;C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers;%(AdditionalIncludeDirectories);C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\include;$(SolutionDir)GasoViz\Dependencies\GLAD\include;$(SolutionDir)GasoViz\Dependencies\AntBar\include;$(SolutionDir)GasoViz\Dependencies\StdImage\include;$(SolutionDir)GasoViz\Dependencies\glm\include;$(SolutionDir)GasoViz\Dependencies\KHR\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\mathee\openGL\libs;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\libs;$(SolutionDir)GasoViz\Dependencies\GLEW\libs;$(SolutionDir)GasoViz\Dependencies\AntBar\libs</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;AntTweakBar64.lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -131,31 +131,35 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\mathee\openGL\headers;%(AdditionalIncludeDirectories);C:\Users\mathee\Documents\Visual Studio 2015\Projects\GasoViz\GasoViz\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\include;$(SolutionDir)GasoViz\Dependencies\GLAD\include;$(SolutionDir)GasoViz\Dependencies\AntBar\include;$(SolutionDir)GasoViz\Dependencies\StdImage\include;$(SolutionDir)GasoViz\Dependencies\glm\include;$(SolutionDir)GasoViz\Dependencies\KHR\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\mathee\openGL\libs;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)GasoViz\Dependencies\GLFW\libs;$(SolutionDir)GasoViz\Dependencies\GLEW\libs;$(SolutionDir)GasoViz\Dependencies\AntBar\libs</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;AntTweakBar64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\csvReader.cpp" />
-    <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\graphics\shader.cpp" />
+    <ClCompile Include="src\graphics\window.cpp" />
+    <ClCompile Include="src\utils\csvReader.cpp" />
+    <ClCompile Include="Dependencies\GLAD\glad.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\graphics\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\AntTweakBar.h" />
-    <ClInclude Include="Headers\camera.h" />
-    <ClInclude Include="Headers\std_image.h" />
-    <ClInclude Include="Headers\Shader.h" />
-    <ClInclude Include="Headers\csvReader.h" />
-    <ClInclude Include="src\particle.h" />
+    <ClInclude Include="Dependencies\AntBar\AntTweakBar.h" />
+    <ClInclude Include="src\graphics\camera.h" />
+    <ClInclude Include="Dependencies\StdImage\std_image.h" />
+    <ClInclude Include="src\graphics\Shader.h" />
+    <ClInclude Include="src\graphics\window.h" />
+    <ClInclude Include="src\utils\csvReader.h" />
+    <ClInclude Include="src\utils\particle.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\shader.fs" />
-    <None Include="Shaders\shader.vs" />
+    <None Include="src\shaders\shader.fs" />
+    <None Include="src\shaders\shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
