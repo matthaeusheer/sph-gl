@@ -14,57 +14,58 @@
 #include "src/graphics/Shader.h"
 #include "src/graphics/camera.h"
 #include "src/graphics/window.h"
-#include "src/utils/csvReader.h"
+#include "src/utils/datamanager.h"
+#include "src/utils/filesize.h"
 
+#include "src/graphics/buffers/buffer.h"
+#include "src/graphics/buffers/indexbuffer.h"
+#include "src/graphics/buffers/vertexarray.h"
 
-struct buffers {
-	unsigned int* VAO;
-	unsigned int* VBO;
-};
-
-
-buffers initBuffer(const std::vector<std::vector<float>>& allData, unsigned int datIdx);
-void updateBufferOnly(unsigned int bufferUpdate, const std::vector<std::vector<float>>& allData, unsigned int& datIdx, int n_timesteps);
 
 int main()
 {
 	// ---------------------------
-	// files to load
+	// Data management
 	int startIdx = 50;
 	int endIdx   = 200;
 	int stepSize = 50;
 
-	
 	std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
-	std::vector<std::vector<float>> allData = loadAllFiles( outSteps);
-	
-	unsigned int datIdx = 0;
-	std::string currentOutputStep = outSteps[datIdx];
-	
-	int n_timesteps = allData.size();
-	int n_vertices = allData[datIdx].size() / 8;
-	float pointSize = 1.0f;
+	DataManager fileReader(outSteps);
+	fileReader.loadAllFiles();
+
+	size_t n_timesteps = fileReader.getNTimesteps();
+	size_t n_vertices = fileReader.getNumberOfParticles();
 
 	// ---------------------------
-
+	// Window initialization
 	Window window("sphGL", 1200, 700);
 	Camera camera(glm::vec3(0.0f, 0.0f, 20.0f));
 	window.attachCamera(camera);
 
+	unsigned int timestep = 0;
+	std::string currentOutputStep = outSteps[timestep];
+
 	// ---------------------------
-	// TW section
-	float fps = 0.0f;
+	// Initialize buffers & shader program
+	VertexArray VAO;
+	Buffer* VBO_pos = new Buffer(fileReader.m_Position.data(), fileReader.getPosSize(), 3);
+	Buffer* VBO_dens = new Buffer(fileReader.m_Density.data(), fileReader.getDensSize(), 1);
+	
+	VAO.addBuffer(VBO_pos, 0);
+	VAO.addBuffer(VBO_dens, 2);
 
 	// Creating a shader program
 	Shader shaderProgram("src/shaders/shader.vs", "src/shaders/shader.fs");
 	shaderProgram.enable();
 
-	buffers buff = initBuffer(allData, datIdx);
-	unsigned int* VAOp = buff.VAO;
-	unsigned int* VBOp = buff.VBO;
+	float pointSize = 1.0f;
+
+	// ---------------------------
+	// TW section
+	float fps = 0.0f;
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
 	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	int numberOfRenders = 0;
@@ -73,20 +74,18 @@ int main()
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	//TwAddVarRW(bar, "n renders", TW_TYPE_STDSTRING, &numberOfRenders, "");
-	//TwDraw();
-
-
+	// ---------------------------
+	// main rendering loop
 	while (!window.closed())
 	{
 		timeValue = glfwGetTime();
 		deltaTime = timeValue - lastFrame;
 		lastFrame = timeValue;
+
 		glfwPollEvents();
-		window.processInput(deltaTime, datIdx, n_timesteps - 1, pointSize);
+		window.processInput(deltaTime, timestep, n_timesteps - 1, pointSize);
 		window.clear();
 		
-		// transform into world coordiates
 		glm::mat4 model, trans;
 		shaderProgram.setMat4("model", model);
 		shaderProgram.setMat4("transform", trans);
@@ -100,22 +99,27 @@ int main()
 		window.updatePointSize(pointSize);
 		shaderProgram.setFloat("pointSize", pointSize);
 
-		shaderProgram.enable();
-		glBindVertexArray(*VAOp);
+		unsigned int timestepDirection = window.queryBufferUpdate();
 
-		unsigned int bufferUpdate = window.queryBufferUpdate();
-		//std::cout << bufferUpdate << std::endl;
-		updateBufferOnly(bufferUpdate, allData, datIdx, n_timesteps);
+		if (timestepDirection != Window::timeStepDirection::NOUPDATE)
+		{
+			if (timestepDirection == Window::timeStepDirection::BACKSTEP && timestep > 0) {
+				timestep--;
+			}
+			else if (timestepDirection == Window::timeStepDirection::FRONTSTEP && timestep < fileReader.getNTimesteps() - 1) {
+				timestep++;
+			}
+
+			VBO_pos->updateBuffer(fileReader.getPosSize() / fileReader.getNTimesteps(), fileReader.getPositionP(timestep));
+			VBO_dens->updateBuffer(fileReader.getDensSize() / fileReader.getNTimesteps(), fileReader.getDensityP(timestep));
+		}
+
 		
 		//-------------
 		// draw call
+		VAO.bind();
 		glDrawArrays(GL_POINTS, 0, n_vertices);
-
-		if (window.isMouseButtonClicked(GLFW_MOUSE_BUTTON_LEFT)) {
-			double x, y;
-			window.getMousePosition(x, y);
-			std::cout << "Mouse clicked at pixel location: " << x << ", " << y << std::endl;
-		}
+		VAO.unbind();
 
 		if (numberOfRenders % 1000 == 0) {
 			fps = 1000 / (timeValue - lastTimeValue);
@@ -126,54 +130,14 @@ int main()
 
 		window.update();
 	}
-	glDeleteVertexArrays(1, VAOp);
-	glDeleteBuffers(1, VBOp);
-	
+
+	VAO.~VertexArray();
 	glfwTerminate();
+
 	return 0;
 }
 
-buffers initBuffer(const std::vector<std::vector<float>>& allData, unsigned int datIdx) {
-	unsigned int VBO, VAO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
-	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, allData[datIdx].size() * sizeof(float), allData[datIdx].data(), GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	//density attribute
-	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(7 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	buffers buff;
-	buff.VAO = &VAO;
-	buff.VBO = &VBO;
-
-	return buff;
-}
-
-void updateBufferOnly(unsigned int bufferUpdate, const std::vector<std::vector<float>>& allData, unsigned int& datIdx, int n_timesteps) {
-	// bufferUpdate: 1 = BACKSTEP, 2 = FRONTSTEP
-
-	if (bufferUpdate == 1 && datIdx > 0) {
-		datIdx--;
-		std::cout << "timestep " << datIdx << std::endl;
-		glBufferSubData(GL_ARRAY_BUFFER, 0, allData[datIdx].size() * sizeof(float), allData[datIdx].data());
-	}
-	else if (bufferUpdate == 2 && datIdx < n_timesteps - 1) {
-		datIdx++;
-		std::cout << "timestep " << datIdx << std::endl;
-		glBufferSubData(GL_ARRAY_BUFFER, 0, allData[datIdx].size() * sizeof(float), allData[datIdx].data());
-	}
-}
-
-
+// TODO: outsource this function to where it belongs
 unsigned int createTexture() {
 	//
 	unsigned int texture; // also multiple textures possible, then create list and pass to glGenTextures
