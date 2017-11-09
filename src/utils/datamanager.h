@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include <ctime>
 
 #include "glad/glad.h"
 #include "glm/glm.hpp"
@@ -44,4 +45,5 @@ std::vector<std::string> linspace(double min, double max, int n);
 void padTo(std::string &str, const size_t num, const char paddingChar = '0');
 std::vector<float> loadFileInOneVector(const char* fileName);
 std::vector<std::string> arange(int start, int stop, int step = 1);
+double diffclock(clock_t clock1, clock_t clock2);
 

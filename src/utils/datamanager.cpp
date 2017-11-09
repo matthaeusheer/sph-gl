@@ -39,12 +39,11 @@ DataManager::DataManager(const std::vector<std::string>& outSteps) : m_NOutSteps
 
 void DataManager::loadAllFiles() 
 {
-	time_t global_start = time(0);
 	float total_size = 0.0f;
-
+	clock_t global_start = clock();
 
 	for (int i=0; i < m_NOutSteps; i++) {
-		time_t start = time(0);
+		clock_t start = clock();
 		std::cout << "Loading... " << m_FileNames[i];
 		
 		 std::vector<std::vector<float>> data_vec = loadCSVFile(&m_FileNames[i][0]);
@@ -52,14 +51,14 @@ void DataManager::loadAllFiles()
 		 m_Velocity.insert(m_Velocity.end(), data_vec[1].begin(), data_vec[1].end());
 		 m_Density.insert(m_Density.end(), data_vec[2].begin(), data_vec[2].end());
 
-		time_t current_time = time(0);
-		double time = difftime(current_time, start) * 1000.0;
+		 clock_t current = clock();
+		double time = diffclock(current, start) ;
 
-		std::cout << ", Time: " << current_time - start << " sec" << std::endl;
+		std::cout << ", Time: " << current - start << " ms" << std::endl;
 	}
-	time_t global_end = time(0);
+	clock_t end = clock();
 	
-	std::cout << "Loaded " << m_NOutSteps << " files  in " << global_end - global_start << " seconds." << std::endl;
+	std::cout << "Loaded " << m_NOutSteps << " files  in " << diffclock(end, global_start) / 1000 << " seconds." << std::endl;
 
 }
 
@@ -236,4 +235,12 @@ std::vector<std::string> arange(int start, int stop, int step) {
 	for (int value = start; value < stop; value += step)
 		values.push_back(std::to_string(value));
 	return values;
+}
+
+double diffclock(clock_t clock1, clock_t clock2) {
+
+	double diffticks = clock1 - clock2;
+	double diffms = diffticks / (CLOCKS_PER_SEC / 1000);
+
+	return diffms;
 }
