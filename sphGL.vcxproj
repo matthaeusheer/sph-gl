@@ -139,23 +139,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="README.md" />
     <None Include="sphGL.VC.db" />
     <None Include="src\shaders\shader.fs" />
     <None Include="src\shaders\shader.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\GLAD\glad.c" />
+    <ClCompile Include="src\graphics\buffers\buffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\vertexarray.cpp" />
     <ClCompile Include="src\graphics\camera.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\utils\csvReader.cpp" />
+    <ClCompile Include="src\utils\datamanager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\buffers\buffer.h" />
+    <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
+    <ClInclude Include="src\graphics\buffers\vertexarray.h" />
     <ClInclude Include="src\graphics\camera.h" />
     <ClInclude Include="src\graphics\Shader.h" />
     <ClInclude Include="src\graphics\window.h" />
-    <ClInclude Include="src\utils\csvReader.h" />
+    <ClInclude Include="src\utils\datamanager.h" />
+    <ClInclude Include="src\utils\filesize.h" />
     <ClInclude Include="src\utils\particle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
