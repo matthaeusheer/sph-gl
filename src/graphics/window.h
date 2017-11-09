@@ -31,9 +31,6 @@ private:
 	double mx, my;
 	double last_mx, last_my;
 
-	enum upfateStatus {
-		NOUPDATE = 0, BACKSTEP = 1, FRONTSTEP = 2
-	};
 
 public:
 	Window(const char *name, int width, int height);
@@ -58,6 +55,11 @@ public:
 	void updatePointSize(float& currentPointSize) const;
 
 	GLFWwindow* getWindow() const;
+	
+	static enum timeStepDirection {
+		NOUPDATE = 0, BACKSTEP = 1, FRONTSTEP = 2
+	} timeStepDirection;
+
 
 private:
 	bool init();
