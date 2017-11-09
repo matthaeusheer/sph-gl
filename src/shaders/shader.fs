@@ -3,9 +3,7 @@
 #version 330 core
 in float dens;
 
-
 vec4 colormap(float x);
-
 
 void main()
 {

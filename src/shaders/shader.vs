@@ -2,7 +2,7 @@
 
 #version 330 core
 layout (location = 0) in vec3 position;		  // vertex attribute 0 is a 3-dim vector
-layout (location = 1) in float density;
+layout (location = 2) in float density;
 
 uniform float pointSize;
 
