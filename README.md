@@ -1,4 +1,8 @@
 # sph-gl
+<p align="center">
+  <img width="500" src="sph_gl.gif.gif">
+</p>
+
 This is a fast point-cloud renderer in C++ using OpenGL with GLFW, GLEW and GLAD.
 
 There is CSV sample data provided in the SampleData directory which is being loaded by default.
