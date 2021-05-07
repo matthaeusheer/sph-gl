@@ -19,7 +19,7 @@ DataManager::DataManager(const std::vector<std::string>& outSteps) : m_NOutSteps
 	for (int i = 0; i < m_NOutSteps; i++) {
 		std::string step = outSteps[i];
 		padTo(step, 5);
-		std::string fileName = "Data\\out_" + step + ".txt";
+		std::string fileName = "../SampleData/out_" + step + ".txt";
 		m_FileNames.push_back(fileName);
 	}
 
@@ -62,8 +62,8 @@ void DataManager::loadAllFiles()
 
 }
 
-std::vector<std::vector<float>> DataManager::loadCSVFile(const char* fileName) {
-	
+    std::vector<std::vector<float>> DataManager::loadCSVFile(const char* fileName) {
+
 	std::vector<std::vector<float>> data(3);
 
 	std::vector<float> position(3 * m_NParticles);
@@ -76,7 +76,7 @@ std::vector<std::vector<float>> DataManager::loadCSVFile(const char* fileName) {
 	int dens_idx = 0;
 
 	FILE* f;
-	fopen_s(&f, fileName, "r");
+	f = fopen(fileName, "r");
 	if (f == NULL)
 	{
 		printf("Failed to open.\n");
@@ -119,7 +119,7 @@ size_t DataManager::getNumberOfParticles() {
 	float x, y, z, vx, vy, vz, m, rho;
 
 	FILE* f;
-	fopen_s(&f, &m_FileNames[0][0], "r");
+	f = fopen(&m_FileNames[0][0], "r");
 	if (f == NULL)
 	{
 		printf("Failed to open.\n");
@@ -178,7 +178,7 @@ std::vector<float> loadFileInOneVector(const char* fileName) {
 	float x, y, z, vx, vy, vz, m, rho;
 
 	FILE* f;
-	fopen_s(&f, fileName, "r");
+	f = fopen(fileName, "r");
 	if (f == NULL)
 	{
 		printf("Failed to open.\n");

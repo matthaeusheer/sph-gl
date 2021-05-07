@@ -31,18 +31,13 @@ int main()
 	int endIdx   = 200;
 	int stepSize = 50;
 
-	//std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
-	//DataManager fileReader(outSteps);
-	//fileReader.loadAllFiles();
+	std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
+	DataManager fileReader(outSteps);
+	fileReader.loadAllFiles();
 
-	//size_t n_timesteps = fileReader.getNTimesteps();
-	size_t n_timesteps = 3;
-	size_t n_vertices = 1;
-	//size_t n_vertices = fileReader.getNumberOfParticles();
+	size_t n_timesteps = fileReader.getNTimesteps();
+    size_t n_vertices = fileReader.getNumberOfParticles();
 
-    std::vector<float> m_Position = {-0.531881,-0.549267,-1.75193e-06};
-    std::vector<float> m_Velocity = {3.43858,0.161529,-0.000335416,0.000654889};
-    std::vector<float> m_Density = {16.4774};
 
 	// ---------------------------
 	// Window initialization
@@ -56,10 +51,8 @@ int main()
 	// ---------------------------
 	// Initialize buffers & shader program
 	VertexArray VAO;
-	//Buffer* VBO_pos = new Buffer(fileReader.m_Position.data(), fileReader.getPosSize(), 3);
-	Buffer* VBO_pos = new Buffer(m_Position.data(), 3, 3);
-	//Buffer* VBO_dens = new Buffer(fileReader.m_Density.data(), fileReader.getDensSize(), 1);
-	Buffer* VBO_dens = new Buffer(m_Density.data(), 1, 1);
+	Buffer* VBO_pos = new Buffer(fileReader.m_Position.data(), fileReader.getPosSize(), 3);
+	Buffer* VBO_dens = new Buffer(fileReader.m_Density.data(), fileReader.getDensSize(), 1);
 
 	VAO.addBuffer(VBO_pos, 0);
 	VAO.addBuffer(VBO_dens, 2);
@@ -115,12 +108,12 @@ int main()
 			if (timestepDirection == Window::timeStepDirection::BACKSTEP && timestep > 0) {
 				timestep--;
 			}
-			//else if (timestepDirection == Window::timeStepDirection::FRONTSTEP && timestep < fileReader.getNTimesteps() - 1) {
-			//	timestep++;
-			//}
+			else if (timestepDirection == Window::timeStepDirection::FRONTSTEP && timestep < fileReader.getNTimesteps() - 1) {
+				timestep++;
+			}
 
-			//VBO_pos->updateBuffer(fileReader.getPosSize() / fileReader.getNTimesteps(), fileReader.getPositionP(timestep));
-			//VBO_dens->updateBuffer(fileReader.getDensSize() / fileReader.getNTimesteps(), fileReader.getDensityP(timestep));
+			VBO_pos->updateBuffer(fileReader.getPosSize() / fileReader.getNTimesteps(), fileReader.getPositionP(timestep));
+			VBO_dens->updateBuffer(fileReader.getDensSize() / fileReader.getNTimesteps(), fileReader.getDensityP(timestep));
 		}
 
 		

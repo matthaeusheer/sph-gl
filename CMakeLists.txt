@@ -5,7 +5,7 @@ project(opengl-skeleton)
 # The main executable
 add_executable(main
         src/main.cpp
-        #src/utils/datamanager.cpp
+        src/utils/datamanager.cpp
         src/graphics/camera.cpp
         src/graphics/shader.cpp
         src/graphics/window.cpp
