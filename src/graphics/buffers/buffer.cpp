@@ -1,6 +1,6 @@
 #include "buffer.h"
-#include "src/graphics/window.h"
-#include "src/utils/datamanager.h"
+#include "window.h"
+#include "datamanager.h"
 
 Buffer::Buffer(GLfloat* data, GLsizei count, GLuint componentCount)
 	: m_ComponentCount(componentCount)

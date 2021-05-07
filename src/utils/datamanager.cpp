@@ -8,7 +8,7 @@
 #include <cmath> 
 
 #include "particle.h"
-#include "DataManager.h"
+#include "datamanager.h"
 #include "filesize.h"
 
 DataManager::DataManager(const std::vector<std::string>& outSteps) : m_NOutSteps(outSteps.size())

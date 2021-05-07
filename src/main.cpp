@@ -5,21 +5,22 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "StdImage/std_image.h"
+#include "STDIMAGE/std_image.h"
 
 #include <math.h>
 #include <iostream>
 #include <assert.h>
+#include <fstream>
 
-#include "src/graphics/Shader.h"
-#include "src/graphics/camera.h"
-#include "src/graphics/window.h"
-#include "src/utils/datamanager.h"
-#include "src/utils/filesize.h"
+#include "Shader.h"
+#include "camera.h"
+#include "window.h"
+#include "datamanager.h"
+#include "filesize.h"
 
-#include "src/graphics/buffers/buffer.h"
-#include "src/graphics/buffers/indexbuffer.h"
-#include "src/graphics/buffers/vertexarray.h"
+#include "buffers/buffer.h"
+#include "buffers/indexbuffer.h"
+#include "buffers/vertexarray.h"
 
 
 int main()
@@ -30,12 +31,18 @@ int main()
 	int endIdx   = 200;
 	int stepSize = 50;
 
-	std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
-	DataManager fileReader(outSteps);
-	fileReader.loadAllFiles();
+	//std::vector<std::string> outSteps = arange(startIdx, endIdx, stepSize);
+	//DataManager fileReader(outSteps);
+	//fileReader.loadAllFiles();
 
-	size_t n_timesteps = fileReader.getNTimesteps();
-	size_t n_vertices = fileReader.getNumberOfParticles();
+	//size_t n_timesteps = fileReader.getNTimesteps();
+	size_t n_timesteps = 3;
+	size_t n_vertices = 1;
+	//size_t n_vertices = fileReader.getNumberOfParticles();
+
+    std::vector<float> m_Position = {-0.531881,-0.549267,-1.75193e-06};
+    std::vector<float> m_Velocity = {3.43858,0.161529,-0.000335416,0.000654889};
+    std::vector<float> m_Density = {16.4774};
 
 	// ---------------------------
 	// Window initialization
@@ -44,19 +51,21 @@ int main()
 	window.attachCamera(camera);
 
 	unsigned int timestep = 0;
-	std::string currentOutputStep = outSteps[timestep];
+	//std::string currentOutputStep = outSteps[timestep];
 
 	// ---------------------------
 	// Initialize buffers & shader program
 	VertexArray VAO;
-	Buffer* VBO_pos = new Buffer(fileReader.m_Position.data(), fileReader.getPosSize(), 3);
-	Buffer* VBO_dens = new Buffer(fileReader.m_Density.data(), fileReader.getDensSize(), 1);
-	
+	//Buffer* VBO_pos = new Buffer(fileReader.m_Position.data(), fileReader.getPosSize(), 3);
+	Buffer* VBO_pos = new Buffer(m_Position.data(), 3, 3);
+	//Buffer* VBO_dens = new Buffer(fileReader.m_Density.data(), fileReader.getDensSize(), 1);
+	Buffer* VBO_dens = new Buffer(m_Density.data(), 1, 1);
+
 	VAO.addBuffer(VBO_pos, 0);
 	VAO.addBuffer(VBO_dens, 2);
 
 	// Creating a shader program
-	Shader shaderProgram("src/shaders/shader.vs", "src/shaders/shader.fs");
+	Shader shaderProgram("../src/shaders/shader.vs", "../src/shaders/shader.fs");
 	shaderProgram.enable();
 
 	float pointSize = 1.0f;
@@ -106,12 +115,12 @@ int main()
 			if (timestepDirection == Window::timeStepDirection::BACKSTEP && timestep > 0) {
 				timestep--;
 			}
-			else if (timestepDirection == Window::timeStepDirection::FRONTSTEP && timestep < fileReader.getNTimesteps() - 1) {
-				timestep++;
-			}
+			//else if (timestepDirection == Window::timeStepDirection::FRONTSTEP && timestep < fileReader.getNTimesteps() - 1) {
+			//	timestep++;
+			//}
 
-			VBO_pos->updateBuffer(fileReader.getPosSize() / fileReader.getNTimesteps(), fileReader.getPositionP(timestep));
-			VBO_dens->updateBuffer(fileReader.getDensSize() / fileReader.getNTimesteps(), fileReader.getDensityP(timestep));
+			//VBO_pos->updateBuffer(fileReader.getPosSize() / fileReader.getNTimesteps(), fileReader.getPositionP(timestep));
+			//VBO_dens->updateBuffer(fileReader.getDensSize() / fileReader.getNTimesteps(), fileReader.getDensityP(timestep));
 		}
 
 		

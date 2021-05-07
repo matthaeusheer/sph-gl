@@ -306,3 +306,12 @@ OpenCover/<F3>
 
 # 
 Data/
+
+# Dependencies and Library stuff
+lib
+
+Dependencies
+
+cmake-build-debug
+cmake-build-release
+

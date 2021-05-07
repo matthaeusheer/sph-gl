@@ -1,3 +1,4 @@
+#include <cstring>
 #include "window.h"
 
 Window::Window(const char *title, int width, int height)
@@ -50,7 +51,7 @@ bool Window::init()
 
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, this);
-	glfwSetFramebufferSizeCallback(m_Window, window_resize);
+	glfwSetFramebufferSizeCallback(m_Window, Window::window_resize);
 	glfwSetKeyCallback(m_Window, key_callback);
 	glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 	glfwSetCursorPosCallback(m_Window, cursor_position_callback);
@@ -251,7 +252,7 @@ void Window::updatePointSize(float& currentPointSize) const {
 // ---------------------------------------------------------------------------------------------------
 // static call-back functions which receive information about pressed buttons and mouse movements
 // and send those to the GLWFwindow instance m_Window of this Window class.
-void window_resize(GLFWwindow *window, int width, int height)
+void Window::window_resize(GLFWwindow *window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
@@ -259,26 +260,26 @@ void window_resize(GLFWwindow *window, int width, int height)
 	win->m_Height = height;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Window::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	win->m_Keys[key] = action != GLFW_RELEASE;
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	win->m_MouseButtons[button] = action != GLFW_RELEASE;
 }
 
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+void Window::cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	win->mx = xpos;
 	win->my = ypos;
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void Window::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	win->m_WheelOffset = yoffset;
