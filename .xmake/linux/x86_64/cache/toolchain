@@ -1,0 +1,22 @@
+{
+    tool_target_techcamp_linux_x86_64_cc = {
+        program = "/usr/bin/gcc",
+        toolchain_info = {
+            cachekey = "gcc_arch_x86_64_plat_linux",
+            plat = "linux",
+            arch = "x86_64",
+            name = "gcc"
+        },
+        toolname = "gcc"
+    },
+    tool_target_techcamp_linux_x86_64_cxx = {
+        program = "/usr/bin/gcc",
+        toolchain_info = {
+            cachekey = "gcc_arch_x86_64_plat_linux",
+            plat = "linux",
+            arch = "x86_64",
+            name = "gcc"
+        },
+        toolname = "gcc"
+    }
+}

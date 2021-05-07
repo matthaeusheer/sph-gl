@@ -1,0 +1,57 @@
+{
+    ["detect.tools.gcc.has_flags"] = {
+        ["/usr/bin/gcc_10.2.0"] = {
+            ["-o"] = true,
+            ["-print-sysroot"] = true,
+            ["-dumpversion"] = true,
+            ["-save-temps"] = true,
+            ["-no-canonical-prefixes"] = true,
+            ["-time"] = true,
+            ["-v"] = true,
+            ["-S"] = true,
+            ["-print-sysroot-headers-suffix"] = true,
+            ["-Xassembler"] = true,
+            ["-Xpreprocessor"] = true,
+            ["--version"] = true,
+            ["-dumpmachine"] = true,
+            ["-print-multi-os-directory"] = true,
+            ["-pass-exit-codes"] = true,
+            ["--target-help"] = true,
+            ["-dumpspecs"] = true,
+            ["--help"] = true,
+            ["-shared"] = true,
+            ["-pipe"] = true,
+            ["-B"] = true,
+            ["-E"] = true,
+            ["-pie"] = true,
+            ["-c"] = true,
+            ["--param"] = true,
+            ["-Xlinker"] = true,
+            ["-x"] = true,
+            ["-print-search-dirs"] = true,
+            ["-print-libgcc-file-name"] = true,
+            ["-print-multiarch"] = true,
+            ["-print-multi-directory"] = true,
+            ["-print-multi-lib"] = true
+        }
+    },
+    find_program_gcc_arch_x86_64_plat_linux = {
+        gcc = "/usr/bin/gcc"
+    },
+    ["lib.detect.has_flags"] = {
+        ["linux_x86_64_/usr/bin/gcc_10.2.0_cxx_cxflags__-fdiagnostics-color=always"] = true,
+        ["linux_x86_64_/usr/bin/gcc_10.2.0_cxx_cxflags__-MMD -MF"] = true
+    },
+    find_program = {
+        zig = false,
+        gcc = "/usr/bin/gcc",
+        gdc = false,
+        dmd = false,
+        ldc2 = false,
+        ccache = false,
+        ["/usr/bin/gcc"] = "/usr/bin/gcc"
+    },
+    find_programver = {
+        ["/usr/bin/gcc"] = "10.2.0"
+    }
+}

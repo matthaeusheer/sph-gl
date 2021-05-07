@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glad/glad.h>
+#include <GLAD/glad.h>
 #include "src/utils/datamanager.h"
 
 class Buffer
@@ -12,7 +12,7 @@ private:
 public:
 	Buffer(GLfloat* data, GLsizei count, GLuint compononentCount);
 
-	void Buffer::updateBuffer(size_t size, float* dataPointer);
+	void updateBuffer(size_t size, float* dataPointer);
 
 	void bind() const;
 	void unbind() const;

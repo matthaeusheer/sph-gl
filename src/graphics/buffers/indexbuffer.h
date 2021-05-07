@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glad/glad.h>
+#include <GLAD/glad.h>
 
 class IndexBuffer
 {
